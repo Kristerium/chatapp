@@ -137,7 +137,7 @@ function init() {
 
     const room = STATE.room;
     const message = messageField.value;
-    const username = usernameField.value || "guest";
+    const username = usernameField.value || "NoName";
     if (!message || !username) return;
 
     if (STATE.connected) {
@@ -160,7 +160,7 @@ function init() {
     roomNameField.value = "";
     if (!addRoom(room)) return;
 
-    addMessage(room, "Overseer [BOT]", `This is your own room, "${room}" you can give your friends the name of the room, and then have a private chat conversation!`, true);
+    addMessage(room, "Your Room", `This is your own room, "${room}" you can give your friends the name of the room, and then have a private chat conversation!`, true);
   })
 
   // Subscribe to server-sent events.

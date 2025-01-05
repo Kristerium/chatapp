@@ -17,6 +17,7 @@
       font-weight: 400;
       text-shadow: rgb(77, 81, 86) 0px 0px 0px;
       height: 100%;
+      overflow: hidden;
   }
   
   main {
@@ -33,7 +34,9 @@
       display: flex;
       flex-direction: column;
       overflow: auto;
-      background-color: var(--bg-light);
+      background-color: transparent;
+      margin-bottom: 20px;
+      border-right: 2px solid #373737;
   }
   
   #room-list {
@@ -42,21 +45,29 @@
       overflow: auto;
       flex: 1;
   }
+
+  #your-rooms {
+    font-size: 24px;
+  }
   
   #sidebar button {
-      height: 40px;
-      margin-bottom: 1px;
-      background: var(--bg-light);
-      color: #fff;
+      background: var(--bg-dark);
+      color: var(--fg-light);
+      padding: 20px;
       overflow: hidden;
+      border-radius: 10px;
+      margin-top: 10px;
+      font-size: 16px;
+      border: 2px solid var(--bg-light);
+      width: 90%;
   }
   
   #sidebar button.active {
-      background: var(--bg-dark);
-      color: var(--callout);
+      background: var(--bg-light);
+      color: var(--fg-light);
       font-weight: bold;
-      box-shadow: 0px 2px 2px rgba(0,0,0,0.9);
       z-index: 10;
+      border: 2px solid var(--bg-dark);
   }
   
   #content {
@@ -80,6 +91,7 @@
       font-weight: bold;
       padding-bottom: 5px;
       color: var(--callout);
+      font-size: 20px;
   }
   
   #messages {
@@ -108,6 +120,9 @@
   input {
       padding: 0 10px;
       background-color: var(--callout-dark);
+      color: var(--fg-ligh);
+      border: none;
+      margin-left: 10px;
   }
   
   input:focus {
@@ -116,51 +131,58 @@
   }
   
   input#username {
-      text-align: right;
-      flex: 1 25%;
-      width: 25%;
-      border-right: 1px solid #303030;
+      text-align: left;
+      border-radius: 10px;
+      width: 150px;
+      background: transparent;
+      border: 2px solid #373737;
+      margin-left: 10px;
+      color: var(--fg-light);
   }
   
   input#message {
-      flex: 10 100%;
+    text-align: left;
+    border-radius: 10px;
+    width: 100%;
+    background: transparent;
+    border: 2px solid #373737;
+    margin-left: 10px;
+    color: var(--fg-light);
+    margin-bottom: 20px;
   }
   
   form button {
-      padding: 0 10px;
+      display: none;
   }
   
-  #sidebar #new-room {
-      display: flex;
-      flex: 0 0 auto;
-      flex-direction: row;
+  #new-room {
+    background: transparent;
   }
-  
-  #new-room input:focus, #new-room button:hover {
+
+  #new-room input:focus {
       filter: brightness(1.2);
   }
   
   #new-room input {
-      flex: 8 80%;
-      width: 20%;
-      background-color: var(--callout-dark);
-      color: #fff;
-  }
-  
-  #new-room button {
-      flex: 2 20%;
-      width: 20%;
-      background-color: var(--bg-dark);
+    text-align: left;
+    border-radius: 10px;
+    width: 90%;
+    background: var(--bg-dark);
+    border: 2px solid #373737;
+    margin-left: 10px;
+    color: var(--fg-dark);
   }
   
   #status {
-      padding: 5px 10px;
+      padding: 10px;
       text-align: center;
-      font-size: 12px;
+      font-size: 16px;
+      border-radius: 10px;
+      width: 90%;
   }
   
   #status.pending::before {
-    content: "Server: connected";
+    content: "Connected";
   }
   
   #status.pending {
@@ -169,7 +191,7 @@
   }
   
   #status.connected::before {
-    content: "Server: connected";
+    content: "Connected";
   }
   
   #status.connected {
@@ -178,7 +200,7 @@
   }
   
   #status.reconnecting::before {
-    content: "Server: reconnecting";
+    content: "Reconnecting";
   }
   
   #status.reconnecting {

@@ -13,6 +13,7 @@
         <div id="status" class="pending"></div>
 
         <div id="room-list">
+          <h1 id="your-rooms">Your rooms</h1>
           <template id="room">
             <button class="room"></button>
           </template>
@@ -38,11 +39,13 @@
 
         <form id="new-message">
           <input type="text" name="username" id="username" maxlength="19"
-            placeholder="guest" autocomplete="off">
+            placeholder="Enter name..." autocomplete="off">
           <input type="text" name="message" id="message" autocomplete="off"
               placeholder="Send a message..." autofocus>
           <button type="submit" id="send">Send</button>
         </form>
+
+
       </div>
     </main>
   </body>
