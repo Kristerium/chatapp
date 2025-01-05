@@ -32,6 +32,8 @@
   #sidebar {
       flex: 3 30%;
       display: flex;
+      align-items: center;
+      width: 100%;
       flex-direction: column;
       overflow: auto;
       background-color: transparent;
@@ -44,6 +46,8 @@
       flex-direction: column;
       overflow: auto;
       flex: 1;
+      width: 100%;
+      align-items: center;
   }
 
   #your-rooms {
@@ -54,7 +58,6 @@
       background: var(--bg-dark);
       color: var(--fg-light);
       padding: 20px;
-      overflow: hidden;
       border-radius: 10px;
       margin-top: 10px;
       font-size: 16px;
@@ -156,7 +159,10 @@
   }
   
   #new-room {
+    display: flex;
     background: transparent;
+    width: 100%;
+    justify-content: center;
   }
 
   #new-room input:focus {
@@ -169,7 +175,6 @@
     width: 90%;
     background: var(--bg-dark);
     border: 2px solid #373737;
-    margin-left: 10px;
     color: var(--fg-dark);
   }
   
