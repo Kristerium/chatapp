@@ -8,8 +8,27 @@ let roomTemplate = document.getElementById('room');
 let messageTemplate = document.getElementById('message');
 
 let messageField = newMessageForm.querySelector("#message");
-let usernameField = newMessageForm.querySelector("#username");
+let usernameField = document.querySelector("#username");
 let roomNameField = newRoomForm.querySelector("#name");
+
+
+// USERNAME SCREEN
+let submitButton = document.getElementById('submit-user')
+
+submitButton.disabled = true;
+
+usernameField.addEventListener('input', function () {
+  if(usernameField.value.trim() !== '') {
+    submitButton.disabled = false;
+  } else {
+    submitButton.disabled = true;
+  }
+})
+
+submitButton.addEventListener("click", function () {
+  document.getElementById('username-input').style.display = "none";
+})
+//USERNAME SCREEN END
 
 var STATE = {
   room: "lobby",
@@ -129,7 +148,15 @@ function init() {
   // Initialize some rooms.
   addRoom("lobby");
   changeRoom("lobby");
-  addMessage("lobby", "Overseer [BOT]", "This is the public chat room, if you need some privacy please make your own room with a secure name!", true);
+  addMessage("lobby", "Server Information", "This is the public chat room, if you need some privacy please make your own room with a secure name!", true);
+
+  fetch("/lobby").then((res) => {
+    res.json().then((json) => {
+      json.forEach((msg) => {
+        addMessage(msg.room, msg.username, msg.message, true);
+      })
+    })
+  })
 
   // Set up the form handler.
   newMessageForm.addEventListener("submit", (e) => {
@@ -137,7 +164,7 @@ function init() {
 
     const room = STATE.room;
     const message = messageField.value;
-    const username = usernameField.value || "NoName";
+    const username = usernameField.value || "Anonymous";
     if (!message || !username) return;
 
     if (STATE.connected) {
@@ -160,7 +187,7 @@ function init() {
     roomNameField.value = "";
     if (!addRoom(room)) return;
 
-    addMessage(room, "Your Room", `This is your own room, "${room}" you can give your friends the name of the room, and then have a private chat conversation!`, true);
+    addMessage(room, "Server Information", `This is your own room, "${room}" you can give your friends the name of the room, and then have a private chat conversation!`, true);
   })
 
   // Subscribe to server-sent events.

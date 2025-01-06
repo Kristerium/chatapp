@@ -25,6 +25,42 @@
   main {
       display: flex;
   }
+
+  #usernameform {
+    background-color: var(--bg-light);
+    border: 2px solid #313244;
+    padding: 30px;
+    border-radius: 15px;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  #username-input {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-color: var(--bg-dark);
+  }
+
+  #username, #submit-user {
+    background: transparent;
+    border: 2px solid #313244;
+    border-radius: 10px;
+    font-size: 24px;
+    padding: 20px;
+    width: 300px;
+    color: var(--fg-light);
+    box-sizing: border-box;
+    text-align: center;
+    margin: 0;
+    display: block;
+  }
   
   button:hover:not(.active) {
       filter: brightness(1.15);
@@ -112,6 +148,7 @@
   
   form {
       display: flex;
+      background-color: var(--bg-dark);
   }
   
   form * {
@@ -133,27 +170,17 @@
       filter: brightness(1.05);
   }
   
-  input#username {
-      text-align: left;
-      border-radius: 10px;
-      width: 150px;
-      background: transparent;
-      border: 1px solid #89b4fa;
-      margin-left: 10px;
-      color: var(--fg-light);
-      font-size: 16px;
-  }
-  
   input#message {
+    height: 50px;
     text-align: left;
     border-radius: 10px;
     width: 100%;
     background: transparent;
-    border: 1px solid #89b4fa;
+    border: 2px solid #313244;
     margin-left: 10px;
     color: var(--fg-light);
     margin-bottom: 20px;
-    font-size: 16px;
+    font-size: 18px;
   }
   
   form button {
@@ -174,11 +201,12 @@
   #new-room input {
     text-align: left;
     border-radius: 10px;
+    height: 50px;
     width: 90%;
     background: var(--bg-dark);
-    border: 1px solid #89b4fa;
+    border: 2px solid #313244;
     color: var(--fg-dark);
-    font-size: 16px;
+    font-size: 18px;
   }
   
   #status {

@@ -1,4 +1,6 @@
 #[macro_use] extern crate rocket;
+extern crate serde;
+extern crate serde_json;
 
 #[cfg(test)] mod tests;
 
@@ -21,6 +23,8 @@ struct Message {
     pub message: String,
 }
 
+static mut LOBBY_MESSAGES: Vec<Message> = Vec::new();
+
 /// Returns an infinite stream of server-sent events. Each event is a message
 /// pulled from a broadcast queue sent by the `post` handler.
 #[get("/events")]
@@ -42,9 +46,23 @@ async fn events(queue: &State<Sender<Message>>, mut end: Shutdown) -> EventStrea
     }
 }
 
+#[get("/lobby")]
+async fn lobby() -> rocket::serde::json::Json<Vec<Message>> {
+    unsafe { rocket::serde::json::Json(LOBBY_MESSAGES.clone()) }
+}
+
 /// Receive a message from a form submission and broadcast it to any receivers.
 #[post("/message", data = "<form>")]
 fn post(form: Form<Message>, queue: &State<Sender<Message>>) {
+    if form.clone().room == "lobby".to_string() {
+        unsafe { 
+            LOBBY_MESSAGES.push(form.clone());
+            
+            if LOBBY_MESSAGES.len() >= 50 {
+                LOBBY_MESSAGES.remove(0);
+            }
+        }
+    }
     // A send 'fails' if there are no active subscribers. That's okay.
     let _res = queue.send(form.into_inner());
 }
@@ -53,6 +71,6 @@ fn post(form: Form<Message>, queue: &State<Sender<Message>>) {
 fn rocket() -> _ {
     rocket::build()
         .manage(channel::<Message>(1024).0)
-        .mount("/", routes![post, events])
+        .mount("/", routes![post, events, lobby])
         .mount("/", FileServer::from(relative!("static")))
 }
