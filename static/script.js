@@ -8,14 +8,20 @@ let roomTemplate = document.getElementById('room');
 let messageTemplate = document.getElementById('message');
 
 let messageField = newMessageForm.querySelector("#message");
-let usernameField = document.querySelector("#username");
 let roomNameField = newRoomForm.querySelector("#name");
 
 
 // USERNAME SCREEN
 let submitButton = document.getElementById('submit-user')
+let usernameField = document.querySelector("#username");
 
-submitButton.disabled = true;
+let savedUsername = localStorage.getItem('username');
+if (savedUsername) {
+  usernameField.value = savedUsername;
+  document.getElementById('username-input').style.display = "none";
+} else {
+  submitButton.disabled = true;
+}
 
 usernameField.addEventListener('input', function () {
   if(usernameField.value.trim() !== '') {
@@ -26,12 +32,16 @@ usernameField.addEventListener('input', function () {
 })
 
 submitButton.addEventListener("click", function () {
-  document.getElementById('username-input').style.display = "none";
+  let username = usernameField.value.trim();
+  if (username) {
+    localStorage.setItem('username', username);
+    document.getElementById('username-input').style.display = "none";
+  }
 })
 //USERNAME SCREEN END
 
 var STATE = {
-  room: "lobby",
+  room: "Lobby",
   rooms: {},
   connected: false,
 }
@@ -146,9 +156,9 @@ function setConnectedStatus(status) {
 // Let's go! Initialize the world.
 function init() {
   // Initialize some rooms.
-  addRoom("lobby");
-  changeRoom("lobby");
-  addMessage("lobby", "Server Information", "This is the public chat room, if you need some privacy please make your own room with a secure name!", true);
+  addRoom("Lobby");
+  changeRoom("Lobby");
+  addMessage("Lobby", "Server Information", "This is the public chat room, where messages get saved for other users too see. If you need some privacy please make your own room in the bottom left corner, with a secure name!", true);
 
   fetch("/lobby").then((res) => {
     res.json().then((json) => {
@@ -187,7 +197,9 @@ function init() {
     roomNameField.value = "";
     if (!addRoom(room)) return;
 
-    addMessage(room, "Server Information", `This is your own room, "${room}" you can give your friends the name of the room, and then have a private chat conversation!`, true);
+    addMessage(room, "Server Information", `This is your own room, "${room}" here, no logs is kept and once you refresh the page both the room and the chats will disappear. 
+      You can give your friends the name of the room, and then have a private chat conversation!`, true);
+    addMessage(room, "Privacy Information", `Please make sure your room name is secure so there is no way for anyone to randomly join your room.`, true);
   })
 
   // Subscribe to server-sent events.

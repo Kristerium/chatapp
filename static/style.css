@@ -119,6 +119,7 @@
   
   .message {
       display: flex;
+      max-width: 600px;
       flex-direction: column;
       padding: 10px 0;
   }

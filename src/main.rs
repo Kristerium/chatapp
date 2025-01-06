@@ -54,7 +54,7 @@ async fn lobby() -> rocket::serde::json::Json<Vec<Message>> {
 /// Receive a message from a form submission and broadcast it to any receivers.
 #[post("/message", data = "<form>")]
 fn post(form: Form<Message>, queue: &State<Sender<Message>>) {
-    if form.clone().room == "lobby".to_string() {
+    if form.clone().room == "Lobby".to_string() {
         unsafe { 
             LOBBY_MESSAGES.push(form.clone());
             
